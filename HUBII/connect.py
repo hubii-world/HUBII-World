@@ -64,12 +64,12 @@ class HUBIIRec:
         self._periodic_task()
         logging.info("WebSocket and Server are connected!")
         for h in self.event_listeners["on_open"]:
-            h(ws)        
+            h(self.session)        
 
     def _on_close(self, ws: websocket.WebSocketApp, close_status_code, close_msg):        
         logging.info("WebSocket and Server are disconnected.")
         for h in self.event_listeners["on_close"]:
-            h(ws)    
+            h(self.session)    
 
     def _on_message(self,ws: websocket.WebSocketApp, message: str):
         item = HubiiRecDataPoint.model_validate_json(message)
@@ -79,14 +79,16 @@ class HUBIIRec:
 
     def _on_error(self, ws: websocket.WebSocketApp, error: Exception):
         logging.error(f"WebSocket Error: {error}")        
-        for handler in self.event_listeners["on_error"]:
-            handler(str(error))
+        for h in self.event_listeners["on_error"]:
+            h(error))
 
     def addEventListener(self,event_type: EventListenerType, func:Callable):
         if event_type.value in self.event_listeners:
-            if event_type == EventListenerType.on_message and type(func) == Callable[HubiiRec]:
+            if event_type == EventListenerType.ON_MESSAGE and type(func) != Callable[HubiiRecDataPoint]:
                 raise ValueError("Function missmatch")
-            if event_type == EventListenerType.periodic_task and type(func) == Callable[HubiiRec]:
+            if event_type == EventListenerType.ON_ERROR and type(func) != Callable[Exception]:
+                raise ValueError("Function missmatch")
+            if event_type.value in [EventListenerType.ON_OPEN,EventListenerType.ON_CLOSE,EventListenerType.PERIODIC_TASK] and type(func) != Callable[HubiiRecSession]:
                 raise ValueError("Function missmatch")
             self.event_listeners[event_type.value].append(func)
         else:
