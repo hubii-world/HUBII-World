@@ -5,7 +5,7 @@ import time
 from typing import Callable, Dict, List
 import websocket
 import threading
-from .websocket_model import HubiiRec
+from .websocket_model import HubiiRecDataPoint
 import pandas as pd
 
 
@@ -72,7 +72,8 @@ class HUBIIRec:
             h(ws)    
 
     def _on_message(self,ws: websocket.WebSocketApp, message: str):
-        item = HubiiRec.model_validate_json(message)
+        item = HubiiRecDataPoint.model_validate_json(message)
+        self.session.addDataPoint(item)
         for h in self.event_listeners['on_message']:
             h(item)
 

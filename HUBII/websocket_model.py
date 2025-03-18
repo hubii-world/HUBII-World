@@ -37,7 +37,7 @@ class HeartRateValue(BaseModel):
     HeartRate: int
     RRInterval: float
 
-class HubiiRec(BaseModel):
+class HubiiRecDataPoint(BaseModel):
     SystemTime: datetime
     Value: MouseMovementValue | MouseClickValue | EyeMovementValue | HeartRateValue 
 
@@ -59,6 +59,18 @@ class HubiiRecSession(BaseModel):
     @property
     def url(self) -> str:
         return self._url
+
+    def addDataPoint(input:HubiiRecDataPoint):
+        type = input.Value.Type
+        if type == EventType.HEARTRATE:
+            add = {"SystemTime":input.SystemTime,"X":input.Value.X, "Y":input.Value.Y}
+        elif type == EventType.MOUSECLICK:
+            add = {"SystemTime":input.SystemTime,"Key":input.Value.Key,"X":input.Value.X, "Y":input.Value.Y}
+        elif type == EventType.EYEMOVEMENT:
+            add = {"SystemTime": input.SystemTime,"LeftX":input.Value.LeftX, "LeftY"::input.Value.LeftY, "RightX"::input.Value.RightX, "RightY"::input.Value.RightY}
+        elif type == EventType.HEARTRATE:
+            add = {"SystemTime": input.SystemTime,"HeartRate":input.Value.HeartRate, "RRInterval": input.Value.RRInterval} 
+        self.data[type] = pd.concat([self.data[type], pd.DataFrame([add])], ignore_index=True)
 
 
 class EventListenerType(enum.Enum):
