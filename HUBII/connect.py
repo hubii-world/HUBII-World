@@ -80,7 +80,7 @@ class HUBIIRec:
     def _on_error(self, ws: websocket.WebSocketApp, error: Exception):
         logging.error(f"WebSocket Error: {error}")        
         for h in self.event_listeners["on_error"]:
-            h(error))
+            h(error)
 
     def addEventListener(self,event_type: EventListenerType, func:Callable):
         if event_type.value in self.event_listeners:
