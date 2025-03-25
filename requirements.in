@@ -3,3 +3,4 @@ pandas
 numpy
 websockets
 websocket-client
+neurokit2
