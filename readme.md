@@ -4,7 +4,7 @@
 
 ## Features
 
-- Quick and easy to us  
+- Quick and easy to use
 - Minimal dependencies  
 - Demonstrates best practices for a Python package  
 

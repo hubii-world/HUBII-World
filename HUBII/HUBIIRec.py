@@ -4,13 +4,14 @@ import logging
 import time
 from typing import Callable, Dict, List
 import websocket
+import asyncio
 import threading
-from .websocket_model import HubiiRecDataPoint
+from .models import HubiiRecDataPoint, HubiiRecSession, EventListenerType
 import pandas as pd
 
 
 class HUBIIRec:
-    def __init__(self, url:str,periodicTimer:int=1000):
+    def __init__(self, url:str,periodicTimer:int=20000):
         self.periodicTaskTimer = periodicTimer
         self.periodicTimerRunning = False
         self.url = url
@@ -41,19 +42,18 @@ class HUBIIRec:
         self.thread = threading.Thread(target=run)
         self.thread.daemon = True
         self.thread.start()
-        self.periodicTimerRunning = True
-        self._periodic_task()
+
+
 
     def _periodic_task(self):
         def periodic_loop():
             while self.periodicTimerRunning:
                 start_time = time.time()
                 for h in self.event_listeners["periodic_task"]:
-                    h(self.session)  
-                time.sleep(max(0, (self.periodicTimer - (time.time() - start_time) * 1000)) / 1000)
+                    h(self.session)
+                time.sleep(max(0, (self.periodicTaskTimer - (time.time() - start_time)*1000)/1000) )
         threading.Thread(target=periodic_loop, daemon=True).start()
 
-    
     def disconnect(self):
         self.periodicTimerRunning = False
         if self.ws:
@@ -84,12 +84,14 @@ class HUBIIRec:
 
     def addEventListener(self,event_type: EventListenerType, func:Callable):
         if event_type.value in self.event_listeners:
-            if event_type == EventListenerType.ON_MESSAGE and type(func) != Callable[HubiiRecDataPoint]:
+            """
+            if event_type == EventListenerType.ON_MESSAGE and not isinstance(func, Callable[[HubiiRecDataPoint], None]):
                 raise ValueError("Function missmatch")
-            if event_type == EventListenerType.ON_ERROR and type(func) != Callable[Exception]:
+            if event_type == EventListenerType.ON_ERROR and not isinstance(func, Callable[[Exception],None]):
                 raise ValueError("Function missmatch")
-            if event_type.value in [EventListenerType.ON_OPEN,EventListenerType.ON_CLOSE,EventListenerType.PERIODIC_TASK] and type(func) != Callable[HubiiRecSession]:
+            if event_type.value in [EventListenerType.ON_OPEN,EventListenerType.ON_CLOSE,EventListenerType.PERIODIC_TASK] and not isinstance(func, Callable[[HubiiRecSession],None]):
                 raise ValueError("Function missmatch")
+            """
             self.event_listeners[event_type.value].append(func)
         else:
             raise ValueError(f"Invalid event type: {event_type}") 

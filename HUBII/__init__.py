@@ -1,3 +1,3 @@
 # HUBII/__init__.py
 
-from .connect import HUBIIRec
+from .HUBIIRec import HUBIIRec

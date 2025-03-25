@@ -1,5 +1,5 @@
 pydantic
-panda
+pandas
 numpy
 websockets
 websocket-client
