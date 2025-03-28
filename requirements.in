@@ -4,3 +4,6 @@ numpy
 websockets
 websocket-client
 neurokit2
+timm
+torch
+transformers

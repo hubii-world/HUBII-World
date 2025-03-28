@@ -10,20 +10,44 @@ certifi==2025.1.31
     # via requests
 charset-normalizer==3.4.1
     # via requests
+colorama==0.4.6
+    # via tqdm
 contourpy==1.3.1
     # via matplotlib
 cycler==0.12.1
     # via matplotlib
+filelock==3.18.0
+    # via
+    #   huggingface-hub
+    #   torch
+    #   transformers
 fonttools==4.56.0
     # via matplotlib
+fsspec==2025.3.0
+    # via
+    #   huggingface-hub
+    #   torch
+huggingface-hub==0.29.3
+    # via
+    #   timm
+    #   tokenizers
+    #   transformers
 idna==3.10
     # via requests
+jinja2==3.1.6
+    # via torch
 joblib==1.4.2
     # via scikit-learn
 kiwisolver==1.4.8
     # via matplotlib
+markupsafe==3.0.2
+    # via jinja2
 matplotlib==3.10.1
     # via neurokit2
+mpmath==1.3.0
+    # via sympy
+networkx==3.4.2
+    # via torch
 neurokit2==0.2.10
     # via -r requirements.in
 numpy==2.2.3
@@ -35,14 +59,21 @@ numpy==2.2.3
     #   pandas
     #   scikit-learn
     #   scipy
+    #   torchvision
+    #   transformers
 packaging==24.2
-    # via matplotlib
+    # via
+    #   huggingface-hub
+    #   matplotlib
+    #   transformers
 pandas==2.2.3
     # via
     #   -r requirements.in
     #   neurokit2
 pillow==11.1.0
-    # via matplotlib
+    # via
+    #   matplotlib
+    #   torchvision
 pydantic==2.10.6
     # via -r requirements.in
 pydantic-core==2.27.2
@@ -55,8 +86,22 @@ python-dateutil==2.9.0.post0
     #   pandas
 pytz==2025.2
     # via pandas
+pyyaml==6.0.2
+    # via
+    #   huggingface-hub
+    #   timm
+    #   transformers
+regex==2024.11.6
+    # via transformers
 requests==2.32.3
-    # via neurokit2
+    # via
+    #   huggingface-hub
+    #   neurokit2
+    #   transformers
+safetensors==0.5.3
+    # via
+    #   timm
+    #   transformers
 scikit-learn==1.6.1
     # via neurokit2
 scipy==1.15.2
@@ -65,12 +110,33 @@ scipy==1.15.2
     #   scikit-learn
 six==1.17.0
     # via python-dateutil
+sympy==1.13.1
+    # via torch
 threadpoolctl==3.6.0
     # via scikit-learn
+timm==1.0.15
+    # via -r requirements.in
+tokenizers==0.21.1
+    # via transformers
+torch==2.6.0
+    # via
+    #   -r requirements.in
+    #   timm
+    #   torchvision
+torchvision==0.21.0
+    # via timm
+tqdm==4.67.1
+    # via
+    #   huggingface-hub
+    #   transformers
+transformers==4.50.2
+    # via -r requirements.in
 typing-extensions==4.12.2
     # via
+    #   huggingface-hub
     #   pydantic
     #   pydantic-core
+    #   torch
 tzdata==2025.2
     # via pandas
 urllib3==2.3.0

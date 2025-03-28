@@ -7,7 +7,7 @@ input_file_path = "C://Biosignal_Analysis//data//HubiiRec_HR_Testdata_Large.csv"
 output_file_path = "C://Biosignal_Analysis//data//HRV_Features.csv"
 window_length = 50  # Number of rows per window
 step_size = 10  # Step size for sliding
-sampling_rate = 1000 # Sampling rate o fhte hr sensor
+sampling_rate = 130 # Sampling rate o fhte hr sensor
 
 # Load data
 #df = pd.read_csv(file_path, sep=';')
