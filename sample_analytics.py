@@ -41,7 +41,7 @@ timestamps_start = []
 timestamps_end = []
 
 for window in windows:
-    rr_intervals = window["rr (ms)"].dropna().values  # Remove NaN values
+    rr_intervals = window["interbeat_interval"].dropna().values  # Remove NaN values
 
     if len(rr_intervals) > 1:  # Ensure at least two RR intervals for HRV calculation
         try:
@@ -62,7 +62,7 @@ if hrv_results:
     # Save the results to a CSV file
     hrv_df.to_csv(output_file_path, sep=',', index=False)
 
-    print(f"HRV features saved to {hrv_results_file}")
+    print(f"HRV features saved to {output_file_path}")
 else:
     print("No valid HRV data was computed.")
 
