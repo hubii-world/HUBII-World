@@ -8,14 +8,6 @@
 - Minimal dependencies  
 - Demonstrates best practices for a Python package  
 
-## Installation
-
-You can install **HUBII** via [pip](https://pip.pypa.io/en/stable/):
-
-```bash
-pip install HUBII
-```
-
 ## Usage
 
 Below are a couple of examples to get you started right away.
