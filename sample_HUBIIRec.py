@@ -7,7 +7,7 @@ import asyncio
 
 logging.basicConfig(level=logging.DEBUG)
 
-ws = HUBIIRec("ws://localhost:4000")
+ws = HUBIIRec("ws://localhost:4000", periodicTimer=20000)
 ws.connect()
 
 def log(item:HubiiRecSession):
